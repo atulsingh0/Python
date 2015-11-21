@@ -9,7 +9,7 @@ no = int(raw_input("Enter a no till which we need to generate Fibonacci series s
 
 curr = 1
 prev = 0
-fibbo = 1
+fibbo = 0
 
 while True:
 	fibbo = prev+curr
