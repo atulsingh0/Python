@@ -9,19 +9,24 @@ no = int(raw_input("Enter a no till which we need to generate Fibonacci series s
 
 curr = 1
 prev = 0
-fibbo = 0
+fibbo = 1
+sum=0
 
 while True:
 	fibbo = prev+curr
 	prev = curr
 	curr = fibbo
-	if fibbo < no:
-		print fibbo,
-	else:
+	# checking if fibbonaci no is less than the no passed by user and even
+	if fibbo < no and fibbo%2==0:
+		sum=sum+fibbo
+		
+	elif fibbo>no:
 		break	
 
+print sum
 
-print "Atul Singh"
-print "www.datagenx.net"
+# Atul Singh
+# www.datagenx.net
+
 
 
