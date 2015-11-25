@@ -28,10 +28,16 @@ def SqSum(no):
 	return sum(sqlist)
 
 
+def SqSum2(no):
+	sum=0
+	for i in range(1,no+1):
+		sum=sum+i**2
+	return sum
 
 no=int(raw_input("Enter a no:"))
 
 print SumSq(no) - SqSum(no)
+print SumSq(no) - SqSum2(no)
 
 
 # Atul Singh
