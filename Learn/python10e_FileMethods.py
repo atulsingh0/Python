@@ -1,7 +1,7 @@
 
 """
 Learning File - Reading files
-Some other methods
+Some other methods - seek and file handler methods
 
 www.datagenx.net
 """
