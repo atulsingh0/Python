@@ -36,3 +36,6 @@ print "\nLine read by readline method:", data
 	
 print "\nWe are done with file reading"
 
+#closing the file handle
+fhand.close()
+
