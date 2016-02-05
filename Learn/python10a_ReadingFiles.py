@@ -15,3 +15,6 @@ for line in fhand:                                     # reading each line from 
 	print line										                       # print
 	
 print "\nWe are done with file reading"
+
+#closing the file handle
+fhand.close()
