@@ -17,8 +17,10 @@ except:
 	print "File is not existing. Please try again"
 	exit()
 	
+count = 0	
 for line in fhand:                                     # reading each line from fhand
-	print line										   # print
-	
+	count += 1										   # print
+
+print "total lines in file:",count	
 print "\nWe are done with file reading"
 
