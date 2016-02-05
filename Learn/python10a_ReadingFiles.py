@@ -23,3 +23,5 @@ print "\nWe are done with file reading"
 
 #closing the file handle
 fhand.close()
+
+
