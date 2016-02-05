@@ -28,3 +28,6 @@ print "Total line in file:",nol   # Printing the file data
 	
 print "\nWe are done with file reading"
 
+#closing the file handle
+fhand.close()
+
