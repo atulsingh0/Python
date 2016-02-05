@@ -10,16 +10,20 @@ www.datagenx.net
 # Below are the assumptions, 
 # the file is existing in the code directory
 
-file_name = raw_input("Enter the file name:- ")        # asking for the file name
+# asking for the file name
+file_name = raw_input("Enter the file name:- ")        
 try:
-	fhand = open(file_name) 	# opening a handler or pointer for input file
+	# opening a handler or pointer for input file
+	fhand = open(file_name) 	
 except:
 	print "File is not existing. Please try again"
 	exit()
 	
 count = 0	
-for line in fhand:                                     # reading each line from fhand
-	count += 1										   # print
+
+# reading each line from fhand
+for line in fhand:                                     
+	count += 1		
 
 print "total lines in file:",count	
 print "\nWe are done with file reading"
