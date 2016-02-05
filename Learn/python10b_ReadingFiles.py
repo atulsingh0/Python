@@ -24,3 +24,7 @@ for line in fhand:                                     # reading each line from 
 print "total lines in file:",count	
 print "\nWe are done with file reading"
 
+#closing the file handle
+fhand.close()
+
+
