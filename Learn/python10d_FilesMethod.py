@@ -34,8 +34,18 @@ print "Total char read:",len(data)
 data = fhand.readline()	
 print "\nLine read by readline method:", data
 	
+
+
+# readlines methods read all line and store as a list
+# but this will read the file from the current file handler position
+data = fhand.readlines()	
+print "\nTotal Lines read by readlines method", len(data)	
+	
 print "\nWe are done with file reading"
 
-#closing the file handle
+
+# closing the file
 fhand.close()
+
+
 
