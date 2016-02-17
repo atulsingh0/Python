@@ -12,18 +12,23 @@ www.datagenx.net
 # Below are the assumptions, 
 # the file is existing in the code directory
 
-file_name = raw_input("Enter the file name:- ")        # asking for the file name
+# asking for the file name
+file_name = raw_input("Enter the file name:- ")        
 try:
-	fhand = open(file_name) 	# opening a handler or pointer for input file
+	# opening a handler or pointer for input file
+	fhand = open(file_name) 	
 except:
 	print "File is not existing. Please try again"
 	exit()
-	
-data = fhand.read(140)	               # reading the first 140 char from file with one statement read	
+
+# reading the first 140 char from file with one statement read		
+data = fhand.read(140)	               
+
 # Above statement read the file and store the whole data (including new line)
 # as a string and stored into a variable called data
 print data
-nol = data.count("\n")+1          # Counting the total \n char in data variable
+# Counting the total \n char in data variable
+nol = data.count("\n")+1          
 print ""
 print "Total line in file:",nol   # Printing the file data
 print "Total char read:",len(data)
