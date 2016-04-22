@@ -1,7 +1,7 @@
 
 Python Learning Scripts
 
-	python1_syntax.py
+	<a href = https://github.com/atulsingh0/Python/blob/master/Learn/python1_syntax.py>python1_syntax.py</a>
 	python2_data-type_Strings.py 	
 	python3_comparison.py 
 	python4_conditional.py
