@@ -96,6 +96,8 @@ lis2.sort()
 print lis2
 lis2.sort(reverse=True)
 print lis2
+lis2.reverse()  #another method to reverse the list
+print lis2
 #lis2.sort(key=len)
 #print lis2
 
@@ -159,6 +161,15 @@ print var1 is var2     # True
 var3[0] = 'NoOne'      #var3 is identical of var1, not aliased, so it will not affect var1
 print var3, var1 
 print var3 is var1     #False
+
+
+# List comprehensions
+# better way to create conditional list
+lis_no = [2,5,1,9,8,4,7]
+lis2 = [x**2 for x in lis_no]  
+print lis2 #print no*no 
+lis2 = [x**2 for x in lis_no if x%2==0]
+print lis2 #print no*no if no is even
 
 
 # Atul Singh
