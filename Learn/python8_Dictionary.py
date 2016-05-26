@@ -56,6 +56,15 @@ stu.update({'stream':'science', 'school':'SGM', 'friends': ['Priya', 'Raj']})   
 print stu
 
 
+# Added a key with default value
+stu.setdefault('teachers',['Mr Principal']).append('Mr Gomez')
+print stu['teachers']
+stu.setdefault('friends',['Vivek']).append('Vibhav')
+print stu['friends']
+stu.setdefault('friends',['Vivek']).append('Swati')
+print stu['friends']
+
+
 # get method to default value
 # accessing values more safely with 'get'
 print stu['name']                       #Rahul
@@ -63,6 +72,7 @@ print stu.get('name')                   # same thing
 #print stu['class-teacher']              # throws an error
 print stu.get('class-teacher')               # None
 print stu.get('class-teacher', 'not found')  # 'not found' (the default)
+
 
 # accessing a list element within a dictionary
 print stu['friends'][0]            # 'Priya'
