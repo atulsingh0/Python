@@ -1,9 +1,8 @@
-<html><head>Python Learning</head>
-<body>
-Python Learning Scripts
+# Python Learning
+## Python Learning Scripts
 
 	<a href = "https://github.com/atulsingh0/Python/blob/master/Learn/python1_syntax.py">python1_syntax.py</a>
-	python2_data-type_Strings.py 	
+	[python2_data-type_Strings.py](https://github.com/atulsingh0/Python/blob/master/Learn/python2_data-type_Strings.py)
 	python3_comparison.py 
 	python4_conditional.py
 	python5_Lists.py 	
@@ -18,9 +17,5 @@ Python Learning Scripts
 	python10e_FileMethods.py 
 	python10f_WritingFiles.py
 	python11_Set.py
-	
-	
 	python_getLineNo.py
 
- 	
-</body></html>
