@@ -44,6 +44,10 @@ print st.startswith('A')   # returns True
 print st.endswith('you')   # returns False
 print st.isdigit()         # returns False (returns True if every character in the string is a digit)
 print st.isalnum()         # returns False
+print sAlp.isalpha()         # returns True
+print st.islower()           
+print st.isupper()
+print st.istitle()
 print st.find('is')      # returns index of first occurrence (2), but doesn't support regex
 print st.find('i')			# index of first i
 print st.find('i',6)        # index of first i after the index 6
