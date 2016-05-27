@@ -1,9 +1,9 @@
 ## Python Learning
 ### Python Learning Scripts
 
-####	[syntax](https://github.com/atulsingh0/Python/blob/master/Learn/python1_syntax.py)
-####	[data-type_Strings](https://github.com/atulsingh0/Python/blob/master/Learn/python2_data-type_Strings.py)
-####	[comparison] (https://github.com/atulsingh0/Python/blob/master/Learn/python3_comparison.py)
+	[syntax](https://github.com/atulsingh0/Python/blob/master/Learn/python1_syntax.py)
+	[data-type_Strings](https://github.com/atulsingh0/Python/blob/master/Learn/python2_data-type_Strings.py)
+	[comparison] (https://github.com/atulsingh0/Python/blob/master/Learn/python3_comparison.py)
 ####	[conditional](https://github.com/atulsingh0/Python/blob/master/Learn/python4_conditional.py)
 ####	[Lists ](https://github.com/atulsingh0/Python/blob/master/Learn/python5_Lists.py)
 ####	[Strings ]	(https://github.com/atulsingh0/Python/blob/master/Learn/python6_Strings.py)
