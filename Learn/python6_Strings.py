@@ -14,6 +14,7 @@ print "Learning Strings"
 
 st = "Atul is learning strings"
 sNo = '432'
+sAlp = 'Atul98'
 print st, type(st)
 print sNo, type(sNo)
 
@@ -35,18 +36,20 @@ print st[4:]	 # is learning strings
 print st[13:24]  #ing strings
 
 # some methods to manipulate the string
-print len(st)      # 6
-print st.lower()   # python   # only work with str data type
-print st.upper()   # PYTHON   # only work with str data type
+print len(st)      # 24
+print st.title()   # Atul Is Learning Strings   # every word is Captalized
+print st.lower()   # atul is learning strings   # only work with str data type
+print st.upper()   # ATUL IS LEARNING STRINGS   # only work with str data type
 print st.startswith('A')   # returns True
 print st.endswith('you')   # returns False
 print st.isdigit()         # returns False (returns True if every character in the string is a digit)
+print st.isalnum()         # returns False
 print st.find('is')      # returns index of first occurrence (2), but doesn't support regex
 print st.find('i')			# index of first i
 print st.find('i',6)        # index of first i after the index 6
-print st.find('i',14,24)        # index of first i after the index 6 and before 24
+print st.find('i',14,24)        # index of first i after the index 14 and before 24
 print st.find('hate')      # returns -1 since not found
-print st.replace('Atul','Rahul')    # replaces all instances of 'like' with 'love'
+print st.replace('Atul','Rahul')    # replaces all instances of 'Atul' with 'Rahul'
 print type(sNo), type(int(sNo))     # converting string to int
 
 # split a string into a list of substrings separated by a delimiter
