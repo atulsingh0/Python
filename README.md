@@ -11,12 +11,12 @@
  *	[Dictionary ]  (https://github.com/atulsingh0/Python/blob/master/Learn/python8_Dictionary.py)
  *	[tuple ]  (https://github.com/atulsingh0/Python/blob/master/Learn/python9_tuple.py)
  *	Files
- *		[a_ReadingFiles]  (https://github.com/atulsingh0/Python/blob/master/Learn/python10a_ReadingFiles.py)
- *		[b_ReadingFiles] (https://github.com/atulsingh0/Python/blob/master/Learn/python10b_ReadingFiles.py)
- *		[c_ReadingFiles] (https://github.com/atulsingh0/Python/blob/master/Learn/python10c_ReadingFiles.py)
- *		[d_FilesMethod ] (https://github.com/atulsingh0/Python/blob/master/Learn/python10d_FilesMethod.py)
- *		[e_FileMethods ] (https://github.com/atulsingh0/Python/blob/master/Learn/python10e_FileMethods.py)
- *		[f_WritingFiles] (https://github.com/atulsingh0/Python/blob/master/Learn/python10f_WritingFiles.py)
+ 	*	[a_ReadingFiles]  (https://github.com/atulsingh0/Python/blob/master/Learn/python10a_ReadingFiles.py)
+ 	*	[b_ReadingFiles] (https://github.com/atulsingh0/Python/blob/master/Learn/python10b_ReadingFiles.py)
+ 	*	[c_ReadingFiles] (https://github.com/atulsingh0/Python/blob/master/Learn/python10c_ReadingFiles.py)
+ 	*	[d_FilesMethod ] (https://github.com/atulsingh0/Python/blob/master/Learn/python10d_FilesMethod.py)
+ 	*	[e_FileMethods ] (https://github.com/atulsingh0/Python/blob/master/Learn/python10e_FileMethods.py)
+ 	*	[f_WritingFiles] (https://github.com/atulsingh0/Python/blob/master/Learn/python10f_WritingFiles.py)
  *	[Set] (https://github.com/atulsingh0/Python/blob/master/Learn/python11_Set.py)
  	
 	
