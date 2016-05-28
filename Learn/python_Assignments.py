@@ -15,4 +15,9 @@
 
 # If - Else
 7. Ask a input from user and print the data type of input
-8. Ask a no from user between (0-23) 
+8. Ask a no from user between (0-23) and retun whether it is morning, noon, 
+   afternoon, evening or night
+
+
+
+
