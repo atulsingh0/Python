@@ -9,6 +9,9 @@
 ### Basic Python print
 4. Write a python script to print "Hello World"
 
+### Reading from the keyboard
+* Write a code to Ask user to insert his name and print "Hello! Username"
+
 ### Data Type and Basic Math Calculation
 5. data type check
 6. fload division
