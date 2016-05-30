@@ -17,7 +17,7 @@
      *                     *
 
 ### Reading from the keyboard
-* Write a code to Ask user to insert his name and print "Hello! Username"
+* Write a code to Ask user to insert his name and print "Hello! <name>"
 
 ### Data Type and Basic Math Calculation
 * data type check
@@ -30,6 +30,11 @@ morning, noon, afternoon, evening or night
 
 ### Loops
 * Ask user to enter an no and print the table of that no
+* 
+
+### Advance data type List, Dictionaly, Tuple & Set
+* Ask user to enter no of student, then their names and print all names
+  like - Hi! <name>
 
 
 
