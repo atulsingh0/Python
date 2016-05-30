@@ -10,12 +10,7 @@
 ### Basic Python print
 * Write a python script to print "Hello World"
 * Print Below designs - 
-* 1. 000000        2. 000000    
-     00000             00000
-     0000               0000
-     000                 000
-     00                   00
-     0                     0
+
 * print a multi line statement
 
 
