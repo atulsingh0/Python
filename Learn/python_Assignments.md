@@ -20,6 +20,7 @@
 ### Data Type and Basic Math Calculation
 * data type check
 * float division
+* Use range function
 
 ### If - Else
 * Check what error you got when missed to indent the code
@@ -34,6 +35,9 @@ morning, noon, afternoon, evening or night
 ### Advance data type List, Dictionaly, Tuple & Set
 * Ask user to enter no of student, then their names and print all names
   like - Hi! <name>
+* Use List data type as Queues (First In First Out)
+* Use List data type as Stacks (Last In First Out)
+* Check 
 
 
 
