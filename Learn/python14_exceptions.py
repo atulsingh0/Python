@@ -1,4 +1,9 @@
 
+"""
+Learning Exception - Handling the error
+
+www.datagenx.net
+"""
 
 # Exceptions
 
@@ -69,3 +74,11 @@ except ValueError:
 except:
     print "Unexpected error:", sys.exc_info()[0]
     raise
+
+
+
+"""
+Thanks
+www.datagenx.net
+"""
+
