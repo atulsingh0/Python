@@ -44,6 +44,8 @@ print lis[::1]   # list[start : end : stride]
 print lis[::2]   # print every 2nd element
 print lis[::-2]   # print every 2nd element but from back
 print lis[::-1]   # print list in reverse
+print lis[2:-2]   # this will print from index2 till 2nd last elements
+print lis[4:2:-1] # 
 
 print "\n\nList Methods"
 # sort - sort the elements
