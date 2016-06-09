@@ -1,7 +1,7 @@
 ## Python Learning
 ### Python Learning Scripts
 
- *	[syntax                ] (https://github.com/atulsingh0/Python/blob/master/Learn/python1_syntax.ipynb)     [       py script](https://github.com/atulsingh0/Python/blob/master/Learn/python1_syntax.py) 
+ *	[syntax] (https://github.com/atulsingh0/Python/blob/master/Learn/python1_syntax.ipynb)     <space><space><space><space>[py_script](https://github.com/atulsingh0/Python/blob/master/Learn/python1_syntax.py) 
  *	[data-type_Strings] (https://github.com/atulsingh0/Python/blob/master/Learn/python2_data-type_Strings.py)
  *	[comparison]  (https://github.com/atulsingh0/Python/blob/master/Learn/python3_comparison.py)
  *	[conditional] (https://github.com/atulsingh0/Python/blob/master/Learn/python4_conditional.py)
