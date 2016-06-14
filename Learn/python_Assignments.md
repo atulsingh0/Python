@@ -37,7 +37,9 @@ morning, noon, afternoon, evening or night
   like - Hi! <name>
 * Use List data type as Queues (First In First Out)
 * Use List data type as Stacks (Last In First Out)
-* Check 
+* Take a list and print the elements in reverse order (do not use slicing)
+* Take a list of words, remove duplicate element irrespective of case (UPPER or lower) and print the new list
+* 
 
 
 
