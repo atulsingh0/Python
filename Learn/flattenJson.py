@@ -19,7 +19,7 @@ for file in all_files:
 			if isinstance(v,dict):
 				csv_line.extend(json.loads(json.dumps(v)).values())
 				if lineno==1:
-					csv_header.extend(json.loads(json.dumps(v)).keys())
+					csv_header.extend(k+"."+key for key in json.loads(json.dumps(v)).keys())
 			else:
 				csv_line.append(v)
 				if lineno==1:
