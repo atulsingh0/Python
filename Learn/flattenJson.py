@@ -16,7 +16,7 @@ for file in all_files:
 		csv_header = []
 		lineno=lineno+1
 		for k,v in data.items():
-			if k in ['platform_web','exception','user','event']:
+			if isinstance(v,dict):
 				csv_line.extend(json.loads(json.dumps(v)).values())
 				if lineno==1:
 					csv_header.extend(json.loads(json.dumps(v)).keys())
