@@ -21,14 +21,15 @@ indir = sys.argv[1]
 outfile = sys.argv[2]
 all_files = [os.path.join(indir,file) for file in os.listdir(indir) if file.endswith(".txt")]
 fcsv = open(outfile,"w")
+csvs = csv.writer(fcsv, delimiter='|',lineterminator='\n')
 lineno=0
+csv_header = []
+
 for file in all_files:
 	fjson = open(file, "r")
-	csvs = csv.writer(fcsv, delimiter='|',lineterminator='\n')
 	for line in fjson:
 		data = json.loads(line)
 		csv_line = []
-		csv_header = []
 		lineno=lineno+1
 		for k,v in data.items():
 			if isinstance(v,dict):
