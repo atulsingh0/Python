@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 
 import json
 import csv
@@ -6,18 +6,15 @@ import os
 import sys
 
 if len(sys.argv)<2:
-	#print("Passed arguement is not correct")
-    #print("Usgae: python flattenJson.py <input-dir> <output-dir>")
-	print "wrong"
+	print("Passed arguement is not correct")
+	print("Usgae: python flattenJson.py <input-dir> <output-dir>")
 	exit()
 elif os.path.isdir(sys.argv[1]) is False:
-    #print("Input Directory path is not exists")
-    #print("Usgae: python flattenJson.py <input-dir> <output-file_absolute_path>")
-	print "wrong"
+	print("Input Directory path is not exists")
+	print("Usgae: python flattenJson.py <input-dir> <output-file_absolute_path>")
 	exit()
 else:
-	print "success"
-    #print("success")
+	print("Processing Files............")
 	
 
 indir = sys.argv[1]
@@ -44,8 +41,12 @@ for file in all_files:
 					csv_header.append(k)
 		if lineno==1:
 			csvs.writerow(csv_header)
-		csv_line = ['NULL' if len(str(x))<1 else x for x in csv_line ]
+		csv_line = ['NULL' if (isinstance(x,str) and len(x)<1) else x for x in csv_line ]
 		csvs.writerow(csv_line)
+	print(file + " is processed successfully.")
     
 	fjson.close()
 fcsv.close()
+
+print ("All files are processed successfully")
+print ("Output file is : "+outfile)
