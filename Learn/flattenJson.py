@@ -1,13 +1,25 @@
 import json
 import csv
 import os
+import sys
 
-dir = "C:\learn\py\crash\data"
-all_files = [os.path.join(dir,file) for file in os.listdir(dir)]
+if len(sys.argv)<2:
+    exit()
+elif (os.path.isdir(sys.argv[0]) and os.path.isdir(sys.argv[1])) is False:
+    print("Directory path is not exists")
+    print("Usgae: python flattenJson.py <input-dir> <output-dir>")
+    exit()
+else:
+    print("success")
+	
+
+indir = sys.argv[0]
+outdir = sys.argv[1]
+all_files = [os.path.join(indir,file) for file in os.listdir(indir)]
 
 for file in all_files:
 	fjson = open(file, "r")
-	fcsv = open(file+".csv","w")
+	fcsv = open(os.path.join(outdir,file)+".csv","w")
 	csvs = csv.writer(fcsv, delimiter='|',lineterminator='\n')
 	lineno=0
 	for line in fjson:
