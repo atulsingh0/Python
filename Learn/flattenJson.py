@@ -5,7 +5,7 @@ import sys
 
 if len(sys.argv)<2:
     exit()
-elif (os.path.isdir(sys.argv[0]) and os.path.isdir(sys.argv[1])) is False:
+elif (os.path.isdir(sys.argv[1]) and os.path.isdir(sys.argv[2])) is False:
     print("Directory path is not exists")
     print("Usgae: python flattenJson.py <input-dir> <output-dir>")
     exit()
@@ -13,8 +13,8 @@ else:
     print("success")
 	
 
-indir = sys.argv[0]
-outdir = sys.argv[1]
+indir = sys.argv[1]
+outdir = sys.argv[2]
 all_files = [os.path.join(indir,file) for file in os.listdir(indir)]
 
 for file in all_files:
