@@ -44,16 +44,22 @@ class Originator(object):
 caketaker = CareTaker()
 originator = Originator("Initialized")
 originator.state = "State1"
+
 # Let's save the actual state
 caketaker.save(originator.save_to_momento())
+
 # Let's modify the originator state
 originator.state = "State2"
+
 # and so on ...
 originator.state = "State5"
+
 # Let's save the actual state
 caketaker.save(originator.save_to_momento())
+
 # Restore originator
 originator.restore_from_momento(caketaker.restore())
+
 
 # Thanks
 # Atul Singh
