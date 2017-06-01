@@ -1,0 +1,1 @@
+PROJ_IRIS_1~irisSchema~ch_1~test1~dq_demo1~empid~empid~~~~~~~~~LEN CHK~0~20~5~2016-07-13
