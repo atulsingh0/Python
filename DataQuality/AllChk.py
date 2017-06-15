@@ -168,11 +168,7 @@ def main(config, outfile):
         
         detail_query1 = detail_query+"\n";
         detail_sqls.append(detail_query1)
-<<<<<<< HEAD
         #print(DupChkCase(DupChk, DupFtrRule, ChkId, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol))
-=======
-        print(DupChkCase(DupChk, DupFtrRule, ChkId, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol))
->>>>>>> 1ee257bfcba75ec9f47aecb7144487ff4e7a9ccf
         
         
 #        # If Null CHK Exist, Generate the NULL Query
