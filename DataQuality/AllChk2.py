@@ -1,37 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Jun  8 07:31:11 2017
+
 @author: Atul
 """
 
-
-def genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab):
-	
-    pk1 =  '\'-\'' if len(PK1)==0 else SrcTab+'.'+PK1
-    pk2 =  '\'-\'' if len(PK2)==0 else SrcTab+'.'+PK2
-    pk3 =  '\'-\''  if len(PK3)==0 else SrcTab+'.'+PK3
-    pk4 =  '\'-\''  if len(PK4)==0 else SrcTab+'.'+PK4
-    pk5 =  '\'-\''  if len(PK5)==0 else SrcTab+'.'+PK5
-    pk6 =  '\'-\''  if len(PK6)==0 else SrcTab+'.'+PK6
-    pk7 =  '\'-\''  if len(PK7)==0 else SrcTab+'.'+PK7
-    pk8 =  '\'-\''  if len(PK8)==0 else SrcTab+'.'+PK8
-    return pk1,pk2,pk3,pk4,pk5,pk6,pk7,pk8
-
-    
-def genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab):
-    pknames=('\'-\'' if len(PK1)==0 else SrcTab+'.'+PK1)  + \
-                ('' if len(PK2)==0 else  ', '+SrcTab+'.'+ PK2) + \
-                ('' if len(PK3)==0 else  ', '+SrcTab+'.'+ PK3 ) + \
-                ('' if len(PK4)==0 else  ', '+SrcTab+'.'+ PK4 ) + \
-                ('' if len(PK5)==0 else  ', '+SrcTab+'.'+ PK5 ) + \
-                ('' if len(PK6)==0 else  ', '+SrcTab+'.'+ PK6 ) + \
-                ('' if len(PK7)==0 else  ', '+SrcTab+'.'+ PK7 ) + \
-                ('' if len(PK8)==0 else  ', '+SrcTab+'.'+ PK8 )
-    return pknames
-        
-            
-    
-    
 def NullChkCase(NullChk, errcol, FtrRule):
     # defining NULL case statament
     if NullChk=='N':
@@ -77,23 +50,27 @@ def DataChkCase(DataChk, errcol, DataFtrRule, table, SrcCol):
         return CaseStmt  
 
 
-def DupChkCase(DupChk, DupFtrRule, ChkId, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol):
+def DupChkCase(DupChk, DupFtrRule, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol):
     if DupChk=='N':
         return -1
     else:
         Dup_fil_cond = '1=1' if len(DupFtrRule)==0 else DupFtrRule
-        PartitionByKey=('\'-\'' if len(PK1)==0 else PK1) + \
-                ('' if len(PK2)==0 else   ',' + PK2)  + \
-                ('' if len(PK3)==0 else   ',' + PK3 ) + \
-                ('' if len(PK4)==0 else   ',' + PK4 ) + \
-                ('' if len(PK5)==0 else   ',' + PK5 ) + \
-                ('' if len(PK6)==0 else   ',' + PK6 ) + \
-                ('' if len(PK7)==0 else   ',' + PK7 ) + \
-                ('' if len(PK8)==0 else   ',' + PK8 )
+        PartitionByKey=('\'-\'' if len(PK1)==0 else ""+PK1) + \
+                ('' if len(PK2)==0 else   ', ' + PK2)  + \
+                ('' if len(PK3)==0 else   ', ' + PK3 ) + \
+                ('' if len(PK4)==0 else   ', ' + PK4 ) + \
+                ('' if len(PK5)==0 else   ', ' + PK5 ) + \
+                ('' if len(PK6)==0 else   ', ' + PK6 ) + \
+                ('' if len(PK7)==0 else   ', ' + PK7 ) + \
+                ('' if len(PK8)==0 else   ', ' + PK8 )
         
-        Dup_detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8,count(*) errcol from {SrcTab} where {Dup_fil_cond} GROUP BY {PartitionByKey} HAVING COUNT(1)>1"\
-                    .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,Dup_fil_cond=Dup_fil_cond,PartitionByKey=PartitionByKey );   
+        Dup_detail_query = "select '{pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8,count(*) DupChkResult from {SrcTab} where {Dup_fil_cond} GROUP BY {PartitionByKey} HAVING COUNT(1)>1"\
+                    .format(pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, SrcTab=SrcTab,Dup_fil_cond=Dup_fil_cond,PartitionByKey=PartitionByKey);   
         return Dup_detail_query  
+
+
+def JoinQuery(detail_query1, detail_query2):
+    return detail_query1+"\n"+detail_query2+"\n";
 
 
 
@@ -109,7 +86,7 @@ def main(config, outfile):
     
         Name = cols[0]
         SrcName = cols[1]
-        ChkId = cols[2]
+        ChkId = cols[2] 
         Desp = cols[3]
         SrcTab = cols[4]
         SrcCol = cols[5]
@@ -155,24 +132,56 @@ def main(config, outfile):
         DataChkDt = cols[45]
         DataChkThrePer = cols[46]
     
-        pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
-        pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
-        errcol = SrcTab+'.'+SrcCol
-    
         
-        detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8, {errcol} errcol, \
-        {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult from {SrcTab} \
+    
+    
+        pknames=('\'-\'' if len(PK1)==0 else SrcTab+'.'+PK1)  + \
+                ('' if len(PK2)==0 else  ', '+SrcTab+'.'+ PK2) + \
+                ('' if len(PK3)==0 else  ', '+SrcTab+'.'+ PK3 ) + \
+                ('' if len(PK4)==0 else  ', '+SrcTab+'.'+ PK4 ) + \
+                ('' if len(PK5)==0 else  ', '+SrcTab+'.'+ PK5 ) + \
+                ('' if len(PK6)==0 else  ', '+SrcTab+'.'+ PK6 ) + \
+                ('' if len(PK7)==0 else  ', '+SrcTab+'.'+ PK7 ) + \
+                ('' if len(PK8)==0 else  ', '+SrcTab+'.'+ PK8 )
+    
+        tabAlias = 'A'
+        pk1 =  '\'-\''  if len(PK1)==0 else tabAlias+'.'+SrcTab+'.'+PK1
+        pk2 =  '\'-\''  if len(PK2)==0 else tabAlias+'.'+SrcTab+'.'+PK2
+        pk3 =  '\'-\''  if len(PK3)==0 else tabAlias+'.'+SrcTab+'.'+PK3
+        pk4 =  '\'-\''  if len(PK4)==0 else tabAlias+'.'+SrcTab+'.'+PK4
+        pk5 =  '\'-\''  if len(PK5)==0 else tabAlias+'.'+SrcTab+'.'+PK5
+        pk6 =  '\'-\''  if len(PK6)==0 else tabAlias+'.'+SrcTab+'.'+PK6
+        pk7 =  '\'-\''  if len(PK7)==0 else tabAlias+'.'+SrcTab+'.'+PK7
+        pk8 =  '\'-\''  if len(PK8)==0 else tabAlias+'.'+SrcTab+'.'+PK8
+        errcol = tabAlias+'.'+SrcTab+'.'+SrcCol
+        
+        
+        detail_query1 = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5, {pk6} pk6, {pk7} pk7, {pk8} pk8, {errcol} errcol, \
+        {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult from {SrcTab} {tabAlias}\
         where ({errcol} is not null and {errcol} != '')"   \
                     .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,   \
-                    	NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol) );
+                    	NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol), tabAlias=tabAlias );
         
-        detail_query1 = detail_query+"\n";
-        detail_sqls.append(detail_query1)
-<<<<<<< HEAD
-        #print(DupChkCase(DupChk, DupFtrRule, ChkId, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol))
-=======
-        print(DupChkCase(DupChk, DupFtrRule, ChkId, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol))
->>>>>>> 1ee257bfcba75ec9f47aecb7144487ff4e7a9ccf
+        #detail_query1 = detail_query+"\n";
+        #detail_sqls.append(detail_query1)
+        
+          
+#        tabAlias = 'B'
+#        pk1 =  '\'-\'' if len(PK1)==0 else tabAlias+'.'+SrcTab+'.'+PK1
+#        pk2 =  '\'-\'' if len(PK2)==0 else tabAlias+'.'+SrcTab+'.'+PK2
+#        pk3 =  '\'-\''  if len(PK3)==0 else tabAlias+'.'+SrcTab+'.'+PK3
+#        pk4 =  '\'-\''  if len(PK4)==0 else tabAlias+'.'+SrcTab+'.'+PK4
+#        pk5 =  '\'-\''  if len(PK5)==0 else tabAlias+'.'+SrcTab+'.'+PK5
+#        pk6 =  '\'-\''  if len(PK6)==0 else tabAlias+'.'+SrcTab+'.'+PK6
+#        pk7 =  '\'-\''  if len(PK7)==0 else tabAlias+'.'+SrcTab+'.'+PK7
+#        pk8 =  '\'-\''  if len(PK8)==0 else tabAlias+'.'+SrcTab+'.'+PK8
+#        errcol = tabAlias+'.'+SrcTab+'.'+SrcCol
+        
+        
+        detail_query2 = DupChkCase(DupChk, DupFtrRule, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol)
+        
+        #detail_query1 = detail_query+"\n";
+        detail_sqls.append(JoinQuery(detail_query1, detail_query2))
         
         
 #        # If Null CHK Exist, Generate the NULL Query
