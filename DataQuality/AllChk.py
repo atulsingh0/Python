@@ -5,8 +5,12 @@ Created on Thu Jun  8 07:31:11 2017
 """
 
 
-def genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab):
+def genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,tabAlias=''):
 	
+    if len(tabAlias)>0:
+        SrcTab=tabAlias+'.'+SrcTab
+    
+        
     pk1 =  '\'-\'' if len(PK1)==0 else SrcTab+'.'+PK1
     pk2 =  '\'-\'' if len(PK2)==0 else SrcTab+'.'+PK2
     pk3 =  '\'-\''  if len(PK3)==0 else SrcTab+'.'+PK3
@@ -77,7 +81,7 @@ def DataChkCase(DataChk, errcol, DataFtrRule, table, SrcCol):
         return CaseStmt  
 
 
-def DupChkCase(DupChk, DupFtrRule, ChkId, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol):
+def DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, pknames, errcol):
     if DupChk=='N':
         return -1
     else:
@@ -91,12 +95,18 @@ def DupChkCase(DupChk, DupFtrRule, ChkId, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8
                 ('' if len(PK7)==0 else   ',' + PK7 ) + \
                 ('' if len(PK8)==0 else   ',' + PK8 )
         
+        pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
+        pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
+        errcol = SrcTab+'.'+SrcCol
         Dup_detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8,count(*) errcol from {SrcTab} where {Dup_fil_cond} GROUP BY {PartitionByKey} HAVING COUNT(1)>1"\
                     .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,Dup_fil_cond=Dup_fil_cond,PartitionByKey=PartitionByKey );   
         return Dup_detail_query  
 
 
-
+    
+     
+        
+        
 
 def main(config, outfile):
     # Defining Main
@@ -155,20 +165,22 @@ def main(config, outfile):
         DataChkDt = cols[45]
         DataChkThrePer = cols[46]
     
+
+    
         pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
         pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
         errcol = SrcTab+'.'+SrcCol
-    
-        
+
         detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8, {errcol} errcol, \
         {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult from {SrcTab} \
         where ({errcol} is not null and {errcol} != '')"   \
                     .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,   \
                     	NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol) );
-        
+
+         
         detail_query1 = detail_query+"\n";
         detail_sqls.append(detail_query1)
-        #print(DupChkCase(DupChk, DupFtrRule, ChkId, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol))
+        print(DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, pknames, errcol)+"\n")
         
         
 #        # If Null CHK Exist, Generate the NULL Query
@@ -252,3 +264,6 @@ outfile = 'Queries_out.sql'
 # Calling Main
 if __name__== "__main__":
     main(config, outfile)
+
+    
+    
