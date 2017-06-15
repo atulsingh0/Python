@@ -1,17 +1,44 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Jun  8 07:31:11 2017
-
 @author: Atul
 """
 
+
+def genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab):
+	
+    pk1 =  '\'-\'' if len(PK1)==0 else SrcTab+'.'+PK1
+    pk2 =  '\'-\'' if len(PK2)==0 else SrcTab+'.'+PK2
+    pk3 =  '\'-\''  if len(PK3)==0 else SrcTab+'.'+PK3
+    pk4 =  '\'-\''  if len(PK4)==0 else SrcTab+'.'+PK4
+    pk5 =  '\'-\''  if len(PK5)==0 else SrcTab+'.'+PK5
+    pk6 =  '\'-\''  if len(PK6)==0 else SrcTab+'.'+PK6
+    pk7 =  '\'-\''  if len(PK7)==0 else SrcTab+'.'+PK7
+    pk8 =  '\'-\''  if len(PK8)==0 else SrcTab+'.'+PK8
+    return pk1,pk2,pk3,pk4,pk5,pk6,pk7,pk8
+
+    
+def genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab):
+    pknames=('\'-\'' if len(PK1)==0 else SrcTab+'.'+PK1)  + \
+                ('' if len(PK2)==0 else  ', '+SrcTab+'.'+ PK2) + \
+                ('' if len(PK3)==0 else  ', '+SrcTab+'.'+ PK3 ) + \
+                ('' if len(PK4)==0 else  ', '+SrcTab+'.'+ PK4 ) + \
+                ('' if len(PK5)==0 else  ', '+SrcTab+'.'+ PK5 ) + \
+                ('' if len(PK6)==0 else  ', '+SrcTab+'.'+ PK6 ) + \
+                ('' if len(PK7)==0 else  ', '+SrcTab+'.'+ PK7 ) + \
+                ('' if len(PK8)==0 else  ', '+SrcTab+'.'+ PK8 )
+    return pknames
+        
+            
+    
+    
 def NullChkCase(NullChk, errcol, FtrRule):
     # defining NULL case statament
     if NullChk=='N':
         return -1
     else:
         fil_cond = '1=1' if len(FtrRule)==0 else FtrRule
-        CaseStmt = "case ({errcol} is null and {errcol} = '') and {fil_cond} When True Then 1 Else 0 end"\
+        CaseStmt = "case ({errcol} is null or {errcol} = '') and {fil_cond} When True Then 1 Else 0 end"\
                     .format(errcol=errcol, fil_cond=fil_cond)
         return CaseStmt
         #return 'case ('+errcol+' is null and '+errcol+" = '') and "+fil_cond+" When True Then 1 Else 0 end"
@@ -34,7 +61,39 @@ def LovChkCase(LovChk, errcol, LovFtrRule):
     if LovChk=='N' or len(LovFtrRule)==0:
         return -1
     else:
-        return "case "+errcol+" not in "+LovFtrRule+" When True Then 1 Else 0 end"
+        CaseStmt = "case ({errcol} not in {LovFtrRule}) When True Then 1 Else 0 end"\
+                    .format(errcol=errcol, LovFtrRule=LovFtrRule)
+        return CaseStmt  
+        #return "case "+errcol+" not in "+LovFtrRule+" When True Then 1 Else 0 end"
+
+
+def DataChkCase(DataChk, errcol, DataFtrRule, table, SrcCol):
+    # defining Length case statament
+    if DataChk=='N':
+        return -1
+    else:    
+        CaseStmt = "case (Not ({table}.{SrcCol} is null or {table}.{SrcCol} = '') and ({SrcCol} like {DataFtrRule})) When True Then 1 Else 0 end"\
+                    .format(errcol=errcol, table=table, SrcCol=SrcCol,  DataFtrRule=DataFtrRule)
+        return CaseStmt  
+
+
+def DupChkCase(DupChk, DupFtrRule, ChkId, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol):
+    if DupChk=='N':
+        return -1
+    else:
+        Dup_fil_cond = '1=1' if len(DupFtrRule)==0 else DupFtrRule
+        PartitionByKey=('\'-\'' if len(PK1)==0 else PK1) + \
+                ('' if len(PK2)==0 else   ',' + PK2)  + \
+                ('' if len(PK3)==0 else   ',' + PK3 ) + \
+                ('' if len(PK4)==0 else   ',' + PK4 ) + \
+                ('' if len(PK5)==0 else   ',' + PK5 ) + \
+                ('' if len(PK6)==0 else   ',' + PK6 ) + \
+                ('' if len(PK7)==0 else   ',' + PK7 ) + \
+                ('' if len(PK8)==0 else   ',' + PK8 )
+        
+        Dup_detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8,count(*) errcol from {SrcTab} where {Dup_fil_cond} GROUP BY {PartitionByKey} HAVING COUNT(1)>1"\
+                    .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,Dup_fil_cond=Dup_fil_cond,PartitionByKey=PartitionByKey );   
+        return Dup_detail_query  
 
 
 
@@ -96,37 +155,20 @@ def main(config, outfile):
         DataChkDt = cols[45]
         DataChkThrePer = cols[46]
     
-    
-    
-    
-        pknames=('\'-\'' if len(PK1)==0 else SrcTab+'.'+PK1)  + \
-                ('' if len(PK2)==0 else  ', '+SrcTab+'.'+ PK2) + \
-                ('' if len(PK3)==0 else  ', '+SrcTab+'.'+ PK3 ) + \
-                ('' if len(PK4)==0 else  ', '+SrcTab+'.'+ PK4 ) + \
-                ('' if len(PK5)==0 else  ', '+SrcTab+'.'+ PK5 ) + \
-                ('' if len(PK6)==0 else  ', '+SrcTab+'.'+ PK6 ) + \
-                ('' if len(PK7)==0 else  ', '+SrcTab+'.'+ PK7 ) + \
-                ('' if len(PK8)==0 else  ', '+SrcTab+'.'+ PK8 )
-    
-        pk1 =  '\'-\'' if len(PK1)==0 else SrcTab+'.'+PK1
-        pk2 =  '\'-\'' if len(PK2)==0 else SrcTab+'.'+PK2
-        pk3 =  '\'-\''  if len(PK3)==0 else SrcTab+'.'+PK3
-        pk4 =  '\'-\''  if len(PK4)==0 else SrcTab+'.'+PK4
-        pk5 =  '\'-\''  if len(PK5)==0 else SrcTab+'.'+PK5
-        pk6 =  '\'-\''  if len(PK6)==0 else SrcTab+'.'+PK6
-        pk7 =  '\'-\''  if len(PK7)==0 else SrcTab+'.'+PK7
-        pk8 =  '\'-\''  if len(PK8)==0 else SrcTab+'.'+PK8
+        pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
+        pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
         errcol = SrcTab+'.'+SrcCol
     
         
         detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8, {errcol} errcol, \
-        {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult from {table} \
-        where ({errcol} is null and {errcol} = '')"   \
-                    .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, table=SrcTab,   \
-                    	NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule) );
+        {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult from {SrcTab} \
+        where ({errcol} is not null and {errcol} != '')"   \
+                    .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,   \
+                    	NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol) );
         
         detail_query1 = detail_query+"\n";
         detail_sqls.append(detail_query1)
+        #print(DupChkCase(DupChk, DupFtrRule, ChkId, pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8,  SrcTab, SrcCol, pknames, errcol))
         
         
 #        # If Null CHK Exist, Generate the NULL Query
