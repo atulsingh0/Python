@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Jun  8 07:31:11 2017
-
 @author: Atul
 """
 
@@ -9,7 +8,7 @@ Created on Thu Jun  8 07:31:11 2017
 def genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,tabAlias=''):
 	
     if len(tabAlias)>0:
-        SrcTab=tabAlias+'.'+SrcTab
+        SrcTab=tabAlias
     
         
     pk1 =  '\'-\'' if len(PK1)==0 else SrcTab+'.'+PK1
@@ -20,6 +19,8 @@ def genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,tabAlias=''):
     pk6 =  '\'-\''  if len(PK6)==0 else SrcTab+'.'+PK6
     pk7 =  '\'-\''  if len(PK7)==0 else SrcTab+'.'+PK7
     pk8 =  '\'-\''  if len(PK8)==0 else SrcTab+'.'+PK8
+    print("Inside genPK")
+    print(pk1,pk2,pk3,pk4,pk5,pk6,pk7,pk8, tabAlias)
     return pk1,pk2,pk3,pk4,pk5,pk6,pk7,pk8
 
     
@@ -118,7 +119,9 @@ def DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8
                 ('' if len(PK8)==0 else   ',' + PK8 )
         
         pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
-        pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,'B')
+        pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
+	print("Inside DupCHK")
+        print(pk1, pk2, pk3, pk4, pk5)
         errcol = SrcTab+'.'+SrcCol
         Dup_detail_query = "select {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8,count(*) CNT from {SrcTab} where {Dup_fil_cond} GROUP BY {PartitionByKey} HAVING COUNT(1)>1"\
                     .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,Dup_fil_cond=Dup_fil_cond,PartitionByKey=PartitionByKey );   
@@ -204,7 +207,7 @@ def main(config, outfile):
         else:
             pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
             pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,'A')
-            errcol = 'A.'+SrcTab+'.'+SrcCol
+            errcol = 'A.'+SrcCol
             pk11, pk21, pk31, pk41, pk51, pk61, pk71, pk81 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,'B')
             
             dup_table = DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, pknames, errcol)
