@@ -19,8 +19,8 @@ def genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,tabAlias=''):
     pk6 =  '\'-\''  if len(PK6)==0 else SrcTab+'.'+PK6
     pk7 =  '\'-\''  if len(PK7)==0 else SrcTab+'.'+PK7
     pk8 =  '\'-\''  if len(PK8)==0 else SrcTab+'.'+PK8
-    print("Inside genPK")
-    print(pk1,pk2,pk3,pk4,pk5,pk6,pk7,pk8, tabAlias)
+    #print("Inside genPK")
+    #print(pk1,pk2,pk3,pk4,pk5,pk6,pk7,pk8, tabAlias)
     return pk1,pk2,pk3,pk4,pk5,pk6,pk7,pk8
 
     
@@ -120,10 +120,10 @@ def DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8
         
         pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
         pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
-	print("Inside DupCHK")
-        print(pk1, pk2, pk3, pk4, pk5)
+        #print("Inside DupCHK")
+        #print(pk1, pk2, pk3, pk4, pk5)
         errcol = SrcTab+'.'+SrcCol
-        Dup_detail_query = "select {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8,count(*) CNT from {SrcTab} where {Dup_fil_cond} GROUP BY {PartitionByKey} HAVING COUNT(1)>1"\
+        Dup_detail_query = "select {pk1}, {pk2}, {pk3}, {pk4}, {pk5},{pk6}, {pk7}, {pk8}, 1 CNT from {SrcTab} where {Dup_fil_cond} GROUP BY {PartitionByKey} HAVING COUNT(1)>1"\
                     .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,Dup_fil_cond=Dup_fil_cond,PartitionByKey=PartitionByKey );   
         return Dup_detail_query  
 
@@ -211,7 +211,7 @@ def main(config, outfile):
             pk11, pk21, pk31, pk41, pk51, pk61, pk71, pk81 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,'B')
             
             dup_table = DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, pknames, errcol)
-            detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5, {pk6} pk6, {pk7} pk7, {pk8} pk8, {errcol} errcol, \
+            detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8, {errcol} errcol, \
         {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, B.CNT DupChkResult  from {SrcTab} A left join ({dup_table}) B\
         on {pk1}={pk11} and {pk2}={pk21} and {pk3}={pk31} and {pk4}={pk41} and {pk5}={pk51} and {pk6}={pk61} and {pk7}={pk71} and {pk8}={pk81} \
         where ({errcol} is not null and {errcol} != '')"   \
