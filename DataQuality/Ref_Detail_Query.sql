@@ -1,0 +1,1 @@
+select 'dq_demo1.empid' pknames,dq_demo1.empid pk1, '-' pk2, '-' pk3, '-' pk4, '-' pk5,'-' pk6, '-' pk7, '-' pk8, dq_demo1.empid errcol, case when ((Country_Codes.Key_Code IS NULL OR Country_Codes.Key_Code='' ) and (1=1)) then 1 else 0 end  ref_Case from dq_demo1 LEFT OUTER JOIN TBL_Schema.Country_Codes on ( dq_demo1.empid=Country_Codes.Key_Code)
