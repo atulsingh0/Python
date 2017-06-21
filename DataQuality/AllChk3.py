@@ -78,7 +78,7 @@ def DataChkCase(DataChk, errcol, DataFtrRule, table, SrcCol):
         return CaseStmt  
 
 
-def DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, pknames, errcol):
+def DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, errcol):
     # defining Duplicate case statament
     if DupChk=='N':
         return -1
@@ -94,11 +94,11 @@ def DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8
                 ('' if len(PK7)==0 else   ',' + PK7 ) + \
                 ('' if len(PK8)==0 else   ',' + PK8 )
         
-        pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
+        #pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
         pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
         errcol = SrcTab+'.'+SrcCol
         Dup_detail_query = "select {pk1}, {pk2}, {pk3}, {pk4}, {pk5},{pk6}, {pk7}, {pk8}, 1 CNT from {SrcTab} where {Dup_fil_cond} GROUP BY {PartitionByKey} HAVING COUNT(1)>1"\
-                    .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,Dup_fil_cond=Dup_fil_cond,PartitionByKey=PartitionByKey );   
+                    .format(chk_id=ChkId, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,Dup_fil_cond=Dup_fil_cond,PartitionByKey=PartitionByKey );   
         return Dup_detail_query
 
 
@@ -192,7 +192,7 @@ def main(config, outfile):
             pk11, pk21, pk31, pk41, pk51, pk61, pk71, pk81 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,'B')
             pk12, pk22, pk32, pk42, pk52, pk62, pk72, pk82 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,'C')
             
-            dup_table = DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, pknames, errcol)
+            dup_table = DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, errcol)
             ref_table = RefChkCase(RefChk,DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, errcol, LkpTblNm, LkpTblKeyCustSQL, LkpCustSQL, LkpTblSchema, CustSQLTblNm, CustSQLTblNmCustSqlKey, Cust_Sql)
             
             detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8, {errcol} errcol, \
@@ -213,7 +213,7 @@ def main(config, outfile):
             errcol = 'A.'+SrcCol
             pk11, pk21, pk31, pk41, pk51, pk61, pk71, pk81 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab,'B')
             
-            dup_table = DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, pknames, errcol)
+            dup_table = DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, errcol)
             detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8, {errcol} errcol, \
         {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, case B.CNT=1 then 1 else 0 end DupChkResult  from {SrcTab} A LEFT OUTER JOIN ({dup_table}) B\
         on {pk1}={pk11} and {pk2}={pk21} and {pk3}={pk31} and {pk4}={pk41} and {pk5}={pk51} and {pk6}={pk61} and {pk7}={pk71} and {pk8}={pk81} \
@@ -248,7 +248,7 @@ def main(config, outfile):
 
         
             detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5, {pk6} pk6, {pk7} pk7, {pk8} pk8, {errcol} errcol, \
-        {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, -1  DupChkResult from {SrcTab} \
+        {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, -1  DupChkResult, -1  RefChkResult from {SrcTab} \
         where ({errcol} is not null and {errcol} != '')"   \
                     .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,   \
                     	NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol) );
