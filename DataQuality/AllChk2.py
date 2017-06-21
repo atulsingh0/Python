@@ -77,7 +77,7 @@ def DataChkCase(DataChk, errcol, DataFtrRule, table, SrcCol):
     if DataChk=='N':
         return -1
     else:    
-        CaseStmt = "case (Not ({table}.{SrcCol} is null or {table}.{SrcCol} = '') and ({SrcCol} like {DataFtrRule})) When True Then 1 Else 0 end"\
+        CaseStmt = "case (Not ({table}.{SrcCol} is null or {table}.{SrcCol} = '') and ({table}.{SrcCol} like {DataFtrRule})) When True Then 1 Else 0 end"\
                     .format(errcol=errcol, table=table, SrcCol=SrcCol,  DataFtrRule=DataFtrRule)
         return CaseStmt  
 
