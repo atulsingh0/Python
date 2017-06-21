@@ -108,15 +108,15 @@ def RefChkCase(RefChk,DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,
 	else:
 		
 		pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
-		ref_Case =  'case when (('+LkpTblNm+"."+LkpTblKeyCustSQL+' IS NULL OR '+LkpTblNm+"."+LkpTblKeyCustSQL+"='' ) and (1=1)) then 1 else 0 end" if LkpCustSQL=='Y' else 'case when (( '+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+' IS NULL OR + '+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+"='' ) and (1=1)) then 1 else 0 end"
+		ref_Case =  'case when (('+LkpTblNm+"."+LkpTblKeyCustSQL+' IS NULL OR '+LkpTblNm+"."+LkpTblKeyCustSQL+"='' ) and (1=1)) then 1 else 0 end" if LkpCustSQL=='Y' else 'case when (( '+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+' IS NULL OR '+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+"='' ) and (1=1)) then 1 else 0 end"
 		leftTable = 'LEFT OUTER JOIN '+ LkpTblSchema+"."+LkpTblNm+' on ( '+ SrcTab+"."+SrcCol+'='+LkpTblNm+"."+LkpTblKeyCustSQL+')' if LkpCustSQL=='Y' else 'LEFT OUTER JOIN '+ Cust_Sql + 'on ( '+ SrcTab+"."+SrcCol+'='+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+")"
 		ref_Case = str.rstrip(ref_Case)
 		leftTable=str.rstrip(leftTable)
 		Ref_detail_query = "select {pk1}, {pk2}, {pk3}, {pk4}, {pk5},{pk6}, {pk7}, {pk8}, {ref_Case} ref_Case from {SrcTab} {leftTable}"\
                     .format( pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8,  SrcTab=SrcTab, LkpTblNm=LkpTblNm,LkpTblKeyCustSQL=LkpTblKeyCustSQL, leftTable=leftTable, ref_Case=ref_Case);
-		Ref_detail_query1 = Ref_detail_query+"\n";
 		
-		return Ref_detail_query1
+		
+		return Ref_detail_query
 
 
 
@@ -196,7 +196,8 @@ def main(config, outfile):
             ref_table = RefChkCase(RefChk,DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,  SrcTab, SrcCol, errcol, LkpTblNm, LkpTblKeyCustSQL, LkpCustSQL, LkpTblSchema, CustSQLTblNm, CustSQLTblNmCustSqlKey, Cust_Sql)
             
             detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{pk6} pk6, {pk7} pk7, {pk8} pk8, {errcol} errcol, \
-        {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, case B.CNT=1 then 1 else 0 end DupChkResult, case C.ref_Case=1 then 1 else 0 end RefChkResult  from {SrcTab} A LEFT OUTER JOIN ({dup_table}) B LEFT OUTER JOIN ({ref_table}) C \
+        {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, case B.CNT=1 then 1 else 0 end DupChkResult, \
+        case C.ref_Case=1 then 1 else 0 end RefChkResult  from {SrcTab} A LEFT OUTER JOIN ({dup_table}) B LEFT OUTER JOIN ({ref_table}) C \
         on {pk1}={pk11} and {pk2}={pk21} and {pk3}={pk31} and {pk4}={pk41} and {pk5}={pk51} and {pk6}={pk61} and {pk7}={pk71} and {pk8}={pk81} \
         {pk1}={pk12} and {pk2}={pk22} and {pk3}={pk32} and {pk4}={pk42} and {pk5}={pk52} and {pk6}={pk62} and {pk7}={pk72} and {pk8}={pk82} \
         where ({errcol} is not null and {errcol} != '')"   \
