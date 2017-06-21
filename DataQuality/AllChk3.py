@@ -94,11 +94,10 @@ def DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8
                 ('' if len(PK7)==0 else   ',' + PK7 ) + \
                 ('' if len(PK8)==0 else   ',' + PK8 )
         
-        #pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
         pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
-        errcol = SrcTab+'.'+SrcCol
+        
         Dup_detail_query = "select {pk1}, {pk2}, {pk3}, {pk4}, {pk5},{pk6}, {pk7}, {pk8}, 1 CNT from {SrcTab} where {Dup_fil_cond} GROUP BY {PartitionByKey} HAVING COUNT(1)>1"\
-                    .format(chk_id=ChkId, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab,Dup_fil_cond=Dup_fil_cond,PartitionByKey=PartitionByKey );   
+                    .format(pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, SrcTab=SrcTab,Dup_fil_cond=Dup_fil_cond,PartitionByKey=PartitionByKey );   
         return Dup_detail_query
 
 
@@ -107,14 +106,12 @@ def RefChkCase(RefChk,DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5, PK6, PK7, PK8,
 	if RefChk=='N':
 		return -1
 	else:
-		pknames = genPKnames(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
+		
 		pk1, pk2, pk3, pk4, pk5, pk6, pk7, pk8 = genPK(PK1,PK2,PK3,PK4,PK5,PK6,PK7,PK8,SrcTab)
-		errcol = SrcTab+'.'+SrcCol
-
 		ref_Case =  'case when (('+LkpTblNm+"."+LkpTblKeyCustSQL+' IS NULL OR '+LkpTblNm+"."+LkpTblKeyCustSQL+"='' ) and (1=1)) then 1 else 0 end " if LkpCustSQL=='Y' else 'case when (( '+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+' IS NULL OR + '+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+"='' ) and (1=1)) then 1 else 0 end "
 		leftTable = 'LEFT OUTER JOIN '+ LkpTblSchema+"."+LkpTblNm+' on ( '+ SrcTab+"."+SrcCol+'='+LkpTblNm+"."+LkpTblKeyCustSQL+')' if LkpCustSQL=='Y' else 'LEFT OUTER JOIN '+ Cust_Sql + 'on ( '+ SrcTab+"."+SrcCol+'='+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+")"
-		Ref_detail_query = "select '{pknames}' pknames,{pk1}, {pk2}, {pk3}, {pk4}, {pk5},{pk6}, {pk7}, {pk8}, {ref_Case} ref_Case from {SrcTab} {leftTable}"\
-                    .format( pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8, errcol=errcol, SrcTab=SrcTab, LkpTblNm=LkpTblNm,LkpTblKeyCustSQL=LkpTblKeyCustSQL, leftTable=leftTable, ref_Case=ref_Case);
+		Ref_detail_query = "select {pk1}, {pk2}, {pk3}, {pk4}, {pk5},{pk6}, {pk7}, {pk8}, {ref_Case} ref_Case from {SrcTab} {leftTable}"\
+                    .format( pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, pk6=pk6, pk7=pk7, pk8=pk8,  SrcTab=SrcTab, LkpTblNm=LkpTblNm,LkpTblKeyCustSQL=LkpTblKeyCustSQL, leftTable=leftTable, ref_Case=ref_Case);
 		Ref_detail_query1 = Ref_detail_query+"\n";
 		return Ref_detail_query1
 
