@@ -1,0 +1,5 @@
+PROJ_IRIS_1~irisschema~ch_1~dq_demo1.empid~dq_demo1~empid~empid~~~~~~~~Y~~13-07-2016~5~Y~~0~2~5~13-07-2016~Y~('e01','e02')~5~13-07-2016~Y~1=1~Y~irisschema~dq_demo2~empid~~~~~13-07-2016~Y~~~13-07-2016~Y~ '^(19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])\\.\\d\\d\\d\\+00:00$'~5~13-07-2016~~~
+PROJ_IRIS_2~irisschema~ch_2~dq_demo1.address~dq_demo1~address~empid~~~~~~~~Y~~14-07-2016~5~Y~~0~2~5~14-07-2016~N~~~~N~~~~~~~~~~~N~~~~N~~~~~~
+PROJ_IRIS_3~irisschema~ch_3~dq_demo1.phone~dq_demo1~phone~empid~~~~~~~~N~~15-07-2016~5~Y~~0~2~5~15-07-2016~Y~('98888889')~5~15-07-2016~N~~~~~~~~~~~Y~~5~15-07-2016~N~~~~~~
+PROJ_IRIS_4~irisschema~ch_4~dq_demo1.name~dq_demo1~name~empid~~~~~~~~N~~16-07-2016~5~Y~~0~2~5~16-07-2016~Y~('eve')~5~16-07-2016~N~~~~~~~~~~~Y~~5~17-07-2016~Y~^[a-zA-Z]$~5~16-07-2016~~~
+PROJ_IRIS_5~irisschema~ch_5~dq_demo1.email~dq_demo1~email~empid~~~~~~~~Y~~17-07-2016~5~N~~~~~17-07-2016~N~~~~Y~1=1~Y~irisschema~dq_demo2~empid~~~~~13-07-2016~N~~~~N~~~~~~

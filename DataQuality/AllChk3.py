@@ -274,7 +274,8 @@ def main(config, outfile):
 
 
 # Setting File
-config = "AllChkConfig.csv"
+#config = "AllChkConfig.csv"
+config = "AllChkConfig_sfurty.csv"
 outfile = 'Queries_out.sql'
 
 # Calling Main
