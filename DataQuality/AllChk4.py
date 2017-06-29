@@ -248,7 +248,8 @@ where ({errcol} is not null and {errcol} != '')"\
 						NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol) );
 		
 
-		detail_query1 = detail_query+";\n";
+		#detail_query1 = detail_query+";\n";
+		detail_query1 = detail_query.replace("and '-'='-'", ' ')+";\n";
 		detail_sqls.append(detail_query1)
         
           
