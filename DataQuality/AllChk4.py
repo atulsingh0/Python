@@ -190,7 +190,7 @@ def main(config, outfile):
 			
 			detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5, {errcol} errcol, \
 {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, CASE WHEN B.CNT=1 THEN 1 ELSE 0 END DupChkResult, \
-CASE WHEN C.ref_Case THEN 1 ELSE 0 END RefChkResult  from {SrcTab} A LEFT OUTER JOIN ({dup_table}) B LEFT OUTER JOIN ({ref_table}) C \
+CASE WHEN C.ref_Case is NULL THEN 0 ELSE 1 END RefChkResult  from {SrcTab} A LEFT OUTER JOIN ({dup_table}) B LEFT OUTER JOIN ({ref_table}) C \
 on {pk1}={pk11} and {pk2}={pk21} and {pk3}={pk31} and {pk4}={pk41} and {pk5}={pk51} and \
 {pk1}={pk12} and {pk2}={pk22} and {pk3}={pk32} and {pk4}={pk42} and {pk5}={pk52} \
 where ({errcol} is not null and {errcol} != '')"\
@@ -226,7 +226,7 @@ where ({errcol} is not null and {errcol} != '')"\
 			
 			ref_table = RefChkCase(RefChk,RefFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5,  SrcTab, SrcCol, errcol, LkpTblNm, LkpTblKeyCustSQL, LkpCustSQL, LkpTblSchema, CustSQLTblNm, CustSQLTblNmCustSqlKey, Cust_Sql)
 			detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,{errcol} errcol, \
-{NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, CASE WHEN C.ref_Case THEN 1 ELSE 0 END RefChkResult \
+{NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, CASE WHEN C.ref_Case is NULL THEN 0 ELSE 1 END RefChkResult \
 from {SrcTab} A LEFT OUTER JOIN ({ref_table}) C on {pk1}={pk11} and {pk2}={pk21} and {pk3}={pk31} and {pk4}={pk41} and {pk5}={pk51} \
 where ({errcol} is not null and {errcol} != '')"\
 					.format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, errcol=errcol, SrcTab=SrcTab,   \
