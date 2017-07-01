@@ -1,0 +1,9 @@
+PROJ_IRIS_1~irisschema~NULL_CHK~dq_demo1.empid~employee~ename~empno~~~~~Y~~5~N~~~~~N~~5~N~~N~~~~~~~~N~~~N~~5~7/13/2016
+PROJ_IRIS_2~irisschema~LEN_CHK~dq_demo1.address~employee~empno~empno~~~~~N~~5~Y~~4~6~5~N~~~N~~N~~~~~~~~N~~~N~~~
+PROJ_IRIS_3~irisschema~LOV_CHK~dq_demo1.phone~employee~deptno~empno~~~~~N~~5~N~~~~5~Y~(10, 20)~5~N~~N~~~~~~~~N~~5~N~~~
+PROJ_IRIS_4~irisschema~DUP_CHK~dq_demo1.name~employee~job~empno~~~~~N~~5~N~~~~~N~~5~N~~N~~~~~~~~N~~5~Y~'%MAN%'~5~7/16/2016
+PROJ_IRIS_5~irisschema~DATA_CHK~dq_demo1.email~employee~empno~empno~~~~~N~~5~N~~~~~N~~~N~~N~~~~~~~~Y~~~N~~~
+PROJ_IRIS_6~irisschema~ALL_CHK_EXP_DATA_REF~dq_demo1.email~employee~deptno~empno~~~~~Y~~~Y~~2~2~~Y~(10, 30)~~N~~N~~~~~~~~Y~~~N~~~
+PROJ_IRIS_7~irisschema~REF_CHK~dq_demo1.email~employee~deptno~empno~~~~~N~~~N~~~~~N~~~Y~~Y~ATUL~dept~deptno~~~~~Y~~~N~~~
+PROJ_IRIS_8~irisschema~REF_CHK2~dq_demo1.email~employee~deptno~empno~~~~~N~~~N~~~~~N~~~Y~~N~ATUL~~~select * from dept~dept~deptno~~N~~~N~~~
+PROJ_IRIS_9~irisschema~ALL_CHK_EXP_DATA~dq_demo1.email~employee~deptno~empno~~~~~Y~~~Y~~2~2~~Y~(10, 30)~~Y~~N~ATUL~~~select * from dept~dept~deptno~~Y~~~N~~~
