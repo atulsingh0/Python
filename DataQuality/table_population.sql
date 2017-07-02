@@ -8,7 +8,7 @@ insert into EMPLOYEE values ("7698","BLAKE","MANAGER","7839","05/01/1981","2850"
 insert into EMPLOYEE values ("7782","","MANAGER","7839","06/09/1981","2450","","10") ;
 insert into EMPLOYEE values ("756","JONES","MANAGER","7839","04/02/1981","2975","","20") ;
 insert into EMPLOYEE values ("7788","SCOTT","ANALYST","7566","12/09/1982","3000","","20") ;
-insert into EMPLOYEE values ("7788","FORD","ANALYST","7566","12/03/1981","3000","","10") ;
+insert into EMPLOYEE values ("78","FORD","ANALYST","7566","12/03/1981","3000","","10") ;
 insert into EMPLOYEE values ("7369","SMITH","CLERK","7902","12/17/1980","800","","") ;
 insert into EMPLOYEE values ("7499","ALLEN","SALESMAN","7698","02/20/1981","1600","300","3") ;
 

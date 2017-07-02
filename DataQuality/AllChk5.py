@@ -10,11 +10,11 @@ def genPK(PK1,PK2,PK3,PK4,PK5,SrcTab,tabAlias=''):
     if len(tabAlias)>0:
         SrcTab=tabAlias
       
-    pk1 =  '-' if len(PK1)==0 else SrcTab+'.'+PK1
-    pk2 =  '-' if len(PK2)==0 else SrcTab+'.'+PK2
-    pk3 =  '-'  if len(PK3)==0 else SrcTab+'.'+PK3
-    pk4 =  '-'  if len(PK4)==0 else SrcTab+'.'+PK4
-    pk5 =  '-'  if len(PK5)==0 else SrcTab+'.'+PK5
+    pk1 =  '\'-\'' if len(PK1)==0 else SrcTab+'.'+PK1
+    pk2 =  '\'-\'' if len(PK2)==0 else SrcTab+'.'+PK2
+    pk3 =  '\'-\''  if len(PK3)==0 else SrcTab+'.'+PK3
+    pk4 =  '\'-\''  if len(PK4)==0 else SrcTab+'.'+PK4
+    pk5 =  '\'-\''  if len(PK5)==0 else SrcTab+'.'+PK5
    
     return pk1,pk2,pk3,pk4,pk5
 
@@ -68,7 +68,8 @@ def DataChkCase(DataChk, errcol, DataFtrRule, table, SrcCol):
     if DataChk=='N':
         return -1
     else:    
-        CaseStmt = "CASE WHEN (Not ({table}.{SrcCol} is null or {table}.{SrcCol} = '') and ({table}.{SrcCol} rlike {DataFtrRule})) THEN 1 ELSE 0 END"\
+        #CaseStmt = "CASE WHEN (Not ({table}.{SrcCol} is null or {table}.{SrcCol} = '') and ({table}.{SrcCol} like {DataFtrRule})) THEN 1 ELSE 0 END"\
+        CaseStmt = "CASE WHEN ({errcol} like {DataFtrRule}) THEN 1 ELSE 0 END"\
                     .format(errcol=errcol, table=table, SrcCol=SrcCol,  DataFtrRule=DataFtrRule)
         return CaseStmt  
 
@@ -107,8 +108,8 @@ def RefChkCase(RefChk,RefFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5,  SrcTab, SrcCo
 		#print("if LkpCustSQL=Y ",LkpCustSQL)
 		#print(Cust_Sql,SrcTab,SrcCol,CustSQLTblNm,CustSQLTblNmCustSqlKey)
 		pk1, pk2, pk3, pk4, pk5 = genPK(PK1,PK2,PK3,PK4,PK5,SrcTab)
-		ref_Case =  'CASE WHEN (('+LkpTblNm+"."+LkpTblKeyCustSQL+' IS NULL OR '+LkpTblNm+"."+LkpTblKeyCustSQL+"='' ) and (1=1)) THEN 1 ELSE 0 END" if LkpCustSQL=='Y' else 'CASE WHEN (( '+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+' IS NULL OR '+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+"='' ) and (1=1)) THEN 1 ELSE 0 END"
-		leftTable = 'LEFT OUTER JOIN '+ LkpTblSchema+"."+LkpTblNm+' on ( '+ SrcTab+"."+SrcCol+'='+LkpTblNm+"."+LkpTblKeyCustSQL+')' if LkpCustSQL=='Y' else 'LEFT OUTER JOIN ('+ Cust_Sql +') '+CustSQLTblNm+ ' on ( '+ SrcTab+"."+SrcCol+'='+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+")"
+		ref_Case =  'CASE WHEN (('+LkpTblNm+"."+LkpTblKeyCustSQL+' IS NULL OR '+LkpTblNm+"."+LkpTblKeyCustSQL+"='' ) and (1=1)) THEN 1 ELSE 0 END" if LkpCustSQL=='L' else 'CASE WHEN (( '+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+' IS NULL OR '+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+"='' ) and (1=1)) THEN 1 ELSE 0 END"
+		leftTable = 'LEFT OUTER JOIN '+ LkpTblSchema+"."+LkpTblNm+' on ( '+ SrcTab+"."+SrcCol+'='+LkpTblNm+"."+LkpTblKeyCustSQL+')' if LkpCustSQL=='L' else 'LEFT OUTER JOIN ('+ Cust_Sql +') '+CustSQLTblNm+ ' on ( '+ SrcTab+"."+SrcCol+'='+CustSQLTblNm+"."+CustSQLTblNmCustSqlKey+")"
 		#print(ref_Case)
 		#print(leftTable)
 		ref_Case = str.rstrip(ref_Case)
@@ -188,7 +189,7 @@ def main(config, outfile):
 			dup_table = DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5 , SrcTab, SrcCol, errcol)
 			ref_table = RefChkCase(RefChk,RefFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5,   SrcTab, SrcCol, errcol, LkpTblNm, LkpTblKeyCustSQL, LkpCustSQL, LkpTblSchema, CustSQLTblNm, CustSQLTblNmCustSqlKey, Cust_Sql)
 			
-			detail_query = "select '{chk_id}', '{pknames}' pknames, '{pk1}' pk1, '{pk2}' pk2, '{pk3}' pk3, '{pk4}' pk4, '{pk5}' pk5,'{errcol}' errcol, \
+			detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,'{errcol}' errcol, {errcol} errcolvalue,\
 {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, CASE WHEN B.CNT=1 THEN 1 ELSE 0 END DupChkResult, \
 CASE WHEN C.ref_Case=1 THEN 1 ELSE 0 END RefChkResult  from {SrcTab} A LEFT OUTER JOIN ({dup_table}) B \
 on {pk1}={pk11} and {pk2}={pk21} and {pk3}={pk31} and {pk4}={pk41} and {pk5}={pk51} \
@@ -207,7 +208,7 @@ LEFT OUTER JOIN ({ref_table}) C on {pk1}={pk12} and {pk2}={pk22} and {pk3}={pk32
 			pk11, pk21, pk31, pk41, pk51 = genPK(PK1,PK2,PK3,PK4,PK5,SrcTab,'B')
 			
 			dup_table = DupChkCase(DupChk, DupFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5,  SrcTab, SrcCol, errcol)
-			detail_query = "select '{chk_id}', '{pknames}' pknames, '{pk1}' pk1, '{pk2}' pk2, '{pk3}' pk3, '{pk4}' pk4, '{pk5}' pk5,'{errcol}' errcol, \
+			detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,'{errcol}' errcol, {errcol} errcolvalue,\
 {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, CASE WHEN B.CNT=1 THEN 1 ELSE 0 END DupChkResult \
 from {SrcTab} A LEFT OUTER JOIN ({dup_table}) B on {pk1}={pk11} and {pk2}={pk21} and {pk3}={pk31} and {pk4}={pk41} and {pk5}={pk51}" \
 					.format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5,  errcol=errcol, SrcTab=SrcTab,   \
@@ -223,7 +224,7 @@ from {SrcTab} A LEFT OUTER JOIN ({dup_table}) B on {pk1}={pk11} and {pk2}={pk21}
 			pk11, pk21, pk31, pk41, pk51 = genPK(PK1,PK2,PK3,PK4,PK5,SrcTab,'C')
 			
 			ref_table = RefChkCase(RefChk,RefFtrRule, ChkId, PK1, PK2, PK3, PK4, PK5,  SrcTab, SrcCol, errcol, LkpTblNm, LkpTblKeyCustSQL, LkpCustSQL, LkpTblSchema, CustSQLTblNm, CustSQLTblNmCustSqlKey, Cust_Sql)
-			detail_query = "select '{chk_id}', '{pknames}' pknames, '{pk1}' pk1, '{pk2}' pk2, '{pk3}' pk3, '{pk4}' pk4, '{pk5}' pk5,'{errcol}' errcol, \
+			detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,'{errcol}' errcol, {errcol} errcolvalue,\
 {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, CASE WHEN C.ref_Case=1 THEN 1 ELSE 0 END RefChkResult \
 from {SrcTab} A LEFT OUTER JOIN ({ref_table}) C on {pk1}={pk11} and {pk2}={pk21} and {pk3}={pk31} and {pk4}={pk41} and {pk5}={pk51}" \
 					.format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, errcol=errcol, SrcTab=SrcTab,   \
@@ -238,14 +239,14 @@ from {SrcTab} A LEFT OUTER JOIN ({ref_table}) C on {pk1}={pk11} and {pk2}={pk21}
 			errcol = SrcTab+'.'+SrcCol
 		
 		
-			detail_query = "select '{chk_id}', '{pknames}' pknames, '{pk1}' pk1, '{pk2}' pk2, '{pk3}' pk3, '{pk4}' pk4, '{pk5}' pk5,'{errcol}' errcol, \
+			detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,'{errcol}' errcol, {errcol} errcolvalue,\
 {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, -1  DupChkResult, -1  RefChkResult from {SrcTab}"\
 					.format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, errcol=errcol, SrcTab=SrcTab,   \
 						NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol) );
 		
 
 		#detail_query1 = detail_query+";\n";
-		detail_query1 = detail_query.replace("and -=-", '').replace("    ", '').replace("-,",'')+";\n";
+		detail_query1 = detail_query.replace("and '-'='-'", '').replace("    ", '').replace("'-',",'')+";\n";
 		detail_sqls.append(detail_query1)
         
           
