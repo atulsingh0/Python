@@ -1,11 +1,11 @@
 PROJ_IRIS_1~irisschema~NULL_CHK~ename~employee~ename~empno~~~~~Y~~5~N~~~~~N~~5~N~~N~~~~~~~~N~~~N~~5~7/13/2016
 PROJ_IRIS_2~irisschema~LEN_CHK~empno~employee~empno~empno~~~~~N~~5~Y~~4~6~5~N~~~N~~N~~~~~~~~N~~~N~~~
 PROJ_IRIS_3~irisschema~LOV_CHK~deptno~employee~deptno~empno~~~~~N~~5~N~~~~5~Y~(10, 20)~5~N~~N~~~~~~~~N~~5~N~~~
-PROJ_IRIS_4~irisschema~DATA_CHK~job~employee~job~empno~~~~~N~~5~N~~~~~N~~5~N~~N~~~~~~~~N~~5~Y~'%MAN%'~5~7/16/2016
+PROJ_IRIS_4~irisschema~DATA_CHK~job~employee~job~empno~~~~~N~~5~N~~~~~N~~5~N~~N~~~~~~~~N~~5~Y~'%4%'~5~7/16/2016
 PROJ_IRIS_5~irisschema~DUP_CHK~empno~employee~empno~empno~~~~~N~~5~N~~~~~N~~~N~~N~~~~~~~~Y~~~N~~~
 PROJ_IRIS_6~irisschema~ALL_CHK_EXP_DATA_REF~deptno~employee~deptno~empno~~~~~Y~~~Y~~2~2~~Y~(10, 30)~~N~~N~~~~~~~~Y~~~N~~~
 PROJ_IRIS_7~irisschema~REF_CHK~deptno~employee~deptno~empno~~~~~N~~~N~~~~~N~~~Y~~L~ATUL~dept~deptno~~~~~Y~~~N~~~
 PROJ_IRIS_8~irisschema~REF_CHK2~deptno~employee~deptno~empno~~~~~N~~~N~~~~~N~~~Y~~C~ATUL~~~select * from dept~dept~deptno~~N~~~N~~~
 PROJ_IRIS_9~irisschema~ALL_CHK_EXP_DATA~deptno~employee~deptno~empno~~~~~Y~~~Y~~2~2~~Y~(10, 30)~~Y~~C~ATUL~~~select * from dept~dept~deptno~~Y~~~N~~~
-PROJ_IRIS_10~irisschema~ALL_CHK~deptno~employee~deptno~empno~~~~~Y~~~Y~~2~2~~T~(20, 30)~~Y~~L~ATUL~dept~deptno~~~~~Y~~~Y~'%MAN%'~~
-PROJ_IRIS_11~irisschema~NULL_REF~deptno~employee~deptno~empno~~~~~Y~~~N~~2~2~~N~(20, 30)~~Y~~L~ATUL~dept~deptno~~~~~N~~~N~'%MAN%'~~
+PROJ_IRIS_10~irisschema~ALL_CHK~deptno~employee~deptno~empno~~~~~Y~~~Y~~2~2~~T~(20, 30)~~Y~~L~ATUL~dept~deptno~~~~~Y~~~Y~'%1%'~~
+PROJ_IRIS_11~irisschema~NULL_REF~deptno~employee~deptno~empno~~~~~Y~~~N~~2~2~~N~(20, 30)~~Y~~L~ATUL~dept~deptno~~~~~N~~~N~'%3%'~~
