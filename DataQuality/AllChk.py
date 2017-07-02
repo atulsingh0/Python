@@ -37,12 +37,12 @@ def genPKnames(PK1,PK2,PK3,PK4,PK5,SrcTab):
     return pknames
         
  
-def NullChkCase(NullChk, errcol, FtrRule):
+def NullChkCase(NullChk, errcol, NullFtrRule):
     # defining NULL CASE statament
     if NullChk=='N':
         return -1
     else:
-        fil_cond = '1=1' if len(FtrRule)==0 else FtrRule
+        fil_cond = '1=1' if len(NullFtrRule)==0 else NullFtrRule
         CaseStmt = "CASE WHEN (({errcol} is null or {errcol} = '') and {fil_cond}) THEN 1 ELSE 0 END"\
                     .format(errcol=errcol, fil_cond=fil_cond)
         return CaseStmt
@@ -137,7 +137,7 @@ def main(config, outfile):
         PK4 = cols[9]                               
         PK5 = cols[10]                              
         NullChk = cols[11]                          
-        FtrRule = cols[12]                          
+        NullFtrRule = cols[12]                          
         NullChkThrePer = cols[13]                   
         LenChk = cols[14]                           
         LenFtrRule = cols[15]                       
@@ -183,7 +183,7 @@ on {pk1}={pk11} and {pk2}={pk21} and {pk3}={pk31} and {pk4}={pk41} and {pk5}={pk
 LEFT OUTER JOIN {ref_table}" \
           .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5,  errcol=errcol, SrcTab=SrcTab,   \
                             pk11=pk11, pk21=pk21, pk31=pk31, pk41=pk41, pk51=pk51, \
-                            NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), \
+                            NullChkStmt=NullChkCase(NullChk, errcol, NullFtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), \
                             LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol),ref_table=ref_table,ref_Case=ref_Case, dup_table=dup_table );
 
         # Generating SQL WHEN Duplicate is ENABLE but Referecne Check      
@@ -199,7 +199,7 @@ LEFT OUTER JOIN {ref_table}" \
 from {SrcTab} A LEFT OUTER JOIN ({dup_table}) B on {pk1}={pk11} and {pk2}={pk21} and {pk3}={pk31} and {pk4}={pk41} and {pk5}={pk51}" \
                     .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5,  errcol=errcol, SrcTab=SrcTab,   \
                             pk11=pk11, pk21=pk21, pk31=pk31, pk41=pk41, pk51=pk51, \
-                            NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), \
+                            NullChkStmt=NullChkCase(NullChk, errcol, NullFtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), \
                             LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol),dup_table=dup_table );
                             
         # Generating SQL WHEN Referecne is ENABLE but Duplicate Check
@@ -213,7 +213,7 @@ from {SrcTab} A LEFT OUTER JOIN ({dup_table}) B on {pk1}={pk11} and {pk2}={pk21}
 {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, -1 DupChkResult, {ref_Case} RefChkResult \
 from {SrcTab} A LEFT OUTER JOIN {ref_table} " \
                     .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, errcol=errcol, SrcTab=SrcTab,   \
-                            NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), \
+                            NullChkStmt=NullChkCase(NullChk, errcol, NullFtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), \
                             LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol), ref_table=ref_table,ref_Case=ref_Case );
 
         # Generating SQL WHEN Referecne and Duplicate Checks are not ENABLE    
@@ -226,7 +226,7 @@ from {SrcTab} A LEFT OUTER JOIN {ref_table} " \
             detail_query = "select '{chk_id}', '{pknames}' pknames, {pk1} pk1, {pk2} pk2, {pk3} pk3, {pk4} pk4, {pk5} pk5,'{errcol}' errcol, {errcol} errcolvalue,\
 {NullChkStmt} NullChkResult, {LenChkStmt} LenChkResult, {LovChkStmt} LovChkResult, {DataChkStmt} DataChkResult, -1 DupChkResult, -1 RefChkResult from {SrcTab}"\
                     .format(chk_id=ChkId, pknames=pknames, pk1=pk1, pk2=pk2, pk3=pk3, pk4=pk4, pk5=pk5, errcol=errcol, SrcTab=SrcTab,   \
-                        NullChkStmt=NullChkCase(NullChk, errcol, FtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol) );
+                        NullChkStmt=NullChkCase(NullChk, errcol, NullFtrRule), LenChkStmt=LenChkCase(LenChk, errcol, LenFtrRule, MinLen, MaxLen), LovChkStmt=LovChkCase(LovChk, errcol, LovFtrRule), DataChkStmt=DataChkCase(DataChk, errcol, DataFtrRule, SrcTab, SrcCol) );
         
 
         
