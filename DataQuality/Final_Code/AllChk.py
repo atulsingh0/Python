@@ -104,7 +104,7 @@ def RefChkCase(RefChk,RefFtrRule, errcol, LkpTblNm, LkpTblKeyCustSQL, LkpCustSQL
         return -1
     else:
         RefFtrRule = '1=1' if len(RefFtrRule)==0 else RefFtrRule
-        ref_Case =  'CASE WHEN (('+tabAlias+"."+LkpTblKeyCustSQL+' IS NOT NULL OR length('+tabAlias+"."+LkpTblKeyCustSQL+")>0 ) and ("+RefFtrRule+")) THEN 1 ELSE 0 END" if LkpCustSQL=='L' else 'CASE WHEN (( '+tabAlias+"."+CustSQLTblNmCustSqlKey+' IS NULL OR '+tabAlias+"."+CustSQLTblNmCustSqlKey+"='' ) and (1=1)) THEN 1 ELSE 0 END"
+        ref_Case =  'CASE WHEN (('+tabAlias+"."+LkpTblKeyCustSQL+' IS NOT NULL and length('+tabAlias+"."+LkpTblKeyCustSQL+")>0 ) and ("+RefFtrRule+")) THEN 1 ELSE 0 END" if LkpCustSQL=='L' else 'CASE WHEN (( '+tabAlias+"."+CustSQLTblNmCustSqlKey+' IS NULL OR '+tabAlias+"."+CustSQLTblNmCustSqlKey+"='' ) and (1=1)) THEN 1 ELSE 0 END"
         ref_table = LkpTblSchema+"."+LkpTblNm+' '+tabAlias+' on '+ errcol+'='+tabAlias+"."+LkpTblKeyCustSQL if LkpCustSQL=='L' else ' ('+ Cust_Sql +') '+tabAlias+ ' on ( '+ errcol +'='+tabAlias+"."+CustSQLTblNmCustSqlKey+")"
         return ref_table,ref_Case
 
