@@ -1,15 +1,15 @@
 ## Python Learning
 ### Python Learning Scripts
 
- *	syntax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[jupyter_script] (https://github.com/atulsingh0/Python/blob/master/Learn/python1_syntax.ipynb)     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[py_script](https://github.com/atulsingh0/Python/blob/master/Learn/python1_syntax.py) 
- *	[data-type_Strings] (https://github.com/atulsingh0/Python/blob/master/Learn/python2_data-type_Strings.py)
- *	[comparison]  (https://github.com/atulsingh0/Python/blob/master/Learn/python3_comparison.py)
- *	[conditional] (https://github.com/atulsingh0/Python/blob/master/Learn/python4_conditional.py)
- *	[Lists ] (https://github.com/atulsingh0/Python/blob/master/Learn/python5_Lists.py)
- *	[Strings ] 	(https://github.com/atulsingh0/Python/blob/master/Learn/python6_Strings.py)
- *	[Loops ] (https://github.com/atulsingh0/Python/blob/master/Learn/python7_Loops.py)
- *	[Dictionary ]  (https://github.com/atulsingh0/Python/blob/master/Learn/python8_Dictionary.py)
- *	[tuple ]  (https://github.com/atulsingh0/Python/blob/master/Learn/python9_tuple.py)
+ *	syntax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[jupyter_script] (https://github.com/atulsingh0/Python/blob/master/Learn/python01_syntax.ipynb)     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[py_script](https://github.com/atulsingh0/Python/blob/master/Learn/python01_syntax.py) 
+ *	[data-type_Strings] (https://github.com/atulsingh0/Python/blob/master/Learn/python02_data-type_Strings.py)
+ *	[comparison]  (https://github.com/atulsingh0/Python/blob/master/Learn/python03_comparison.py)
+ *	[conditional] (https://github.com/atulsingh0/Python/blob/master/Learn/python04_conditional.py)
+ *	[Lists ] (https://github.com/atulsingh0/Python/blob/master/Learn/python05_Lists.py)
+ *	[Strings ] 	(https://github.com/atulsingh0/Python/blob/master/Learn/python06_Strings.py)
+ *	[Loops ] (https://github.com/atulsingh0/Python/blob/master/Learn/python07_Loops.py)
+ *	[Dictionary ]  (https://github.com/atulsingh0/Python/blob/master/Learn/python08_Dictionary.py)
+ *	[tuple ]  (https://github.com/atulsingh0/Python/blob/master/Learn/python09_tuple.py)
  *	Files
  	*	[a_ReadingFiles]  (https://github.com/atulsingh0/Python/blob/master/Learn/python10a_ReadingFiles.py)
  	*	[b_ReadingFiles] (https://github.com/atulsingh0/Python/blob/master/Learn/python10b_ReadingFiles.py)
