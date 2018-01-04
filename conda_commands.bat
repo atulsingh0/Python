@@ -14,7 +14,7 @@ conda list --show-channel-urls
 conda list -n <myenv>
 
 :: Check if package is installed or not
-conda list -n <myenv> <pkg>
+conda list -n <myenv> <pkg_name>
 
 :: Running Conda Navigator
 anaconda-navigator
@@ -24,7 +24,7 @@ conda update anaconda-navigator
 
 :: Exporting Conda Environment file
 call activate <myenv>
-conda env export > env.y,ml
+conda env export > env.yml
 
 :: Removing Conda Envitonment
-conda remove --name <env> --all 
+conda remove --name <myenv> --all 
