@@ -28,3 +28,13 @@ conda env export > env.yml
 
 :: Removing Conda Envitonment
 conda remove --name <myenv> --all 
+
+:: Install pkg
+conda install <pkg>
+
+:: Install pkg from specific channel
+conda install <pkg> -c  <chaneel>  # such as conda-forge
+
+:: Install pkg for specific env
+conda install --name <env> <pkg>
+
