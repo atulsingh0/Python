@@ -38,3 +38,10 @@ conda install <pkg> -c  <chaneel>  # such as conda-forge
 :: Install pkg for specific env
 conda install --name <env> <pkg>
 
+:: Cloning the Env
+conda create --name myclone --clone myenv
+
+
+
+
+
