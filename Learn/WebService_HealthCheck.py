@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+Author: Atul Singh
+Date:  Nov 10, 2018
+Usgae: python <ENV>
 
-This is a temporary script file.
+This Python Script read the input config files which contains the service url
+and their request and call the services and records their responses. 
 """
 
 import concurrent.futures
