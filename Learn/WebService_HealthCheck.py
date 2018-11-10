@@ -2,7 +2,7 @@
 """
 Author: Atul Singh
 Date:  Nov 10, 2018
-Usgae: python <ENV>
+Usgae: python WebService_HealthCheck.py <ENV>
 
 This Python Script read the input config files which contains the service url
 and their request and call the services and records their responses. 
@@ -19,7 +19,7 @@ import sys
 #checking for arguement
 
 if len(sys.argv) < 2 :
-	print("Usage: python <ENV> [LineNo]")
+	print("Usage: python WebService_HealthCheck.py <ENV> [LineNo]")
 	print("ENV : QA, IST")
 	sys.exit(1);
 elif len(sys.argv)==2 :
