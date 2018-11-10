@@ -67,6 +67,7 @@ def fire_rest_post_request(url, timeout, inp):
 	start_time = time.time()
 	cert=(cert_file_path,key_file_path)
 	response=requests.post(url, timeout=timeout,headers=headers, data=inp, cert=cert, verify=False)
+	#response=requests.post(url, timeout=timeout,headers=headers, data=inp, cert=none, verify=False)
 	end_time=time.time() - start_time
 	data=response.json()
 	return {'responsetime':end_time,'response':response, 'data':data}
