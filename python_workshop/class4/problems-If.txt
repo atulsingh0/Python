@@ -1,0 +1,22 @@
+1. Figure out what the result will be (True or False) when evaluating
+the following expressions, then type them into the interactive window to check your answers:
+	(1 <= 1) and (1 != 1)
+	not (1 != 2)
+	("good" != "bad") or False
+	("good" != "Good") and not (1 == 1)
+
+
+2. Add parentheses where necessary so that each of the following expressions evaluates to True:
+	False == not True
+	True and False == True and False
+	not True and "A" == "B"
+	
+3. Write a script that prompts the user to enter a word using the
+input() function, stores that input in a variable, and then displays
+whether the length of that string is less than 5 characters, greater
+than 5 characters, or equal to 5 characters by using a set of if, elif
+and else statement. 
+
+4. Write a script that prompts user to enter a word using the
+input() function, stores that input in a variable, and then displays 
+the word in UPPER case if length of word is even else in LOWER case. 
