@@ -1,0 +1,29 @@
+# WHILE loop
+
+1. Write a While Loop which wll run 6 times and perform below task - 
+    a. It ask user to Enter a no, store this no in variable - x 
+    b. It will print the no in fancy way - "You have enterted no: x"
+    c. It will print the accumulated Sum of that no as well - x + (previous x) 
+    
+2. Write a While Loop which wll run till the time user entered q to quit and perform below task - 
+    a. It ask user to Enter a no, store this no in variable - x 
+    b. It will print the no in fancy way - "You have enterted no: x"
+    c. It will print the accumulated Sum of that no as well - x + (previous x) 
+    
+3. Write a While Loop which wll run till the time user entered q to quit and perform below task - 
+    a. It ask user to Enter a no, store this no in variable - x 
+    b. It will print the no in fancy way - "You have enterted no: x"
+    c. It will print the accumulated Sum of that no as well - x + (previous x) 
+    d. Loop will exit if total sum > 50
+    
+4. Write a While loop as below - 
+    a. Create a variable say -  pwd = 'MyPassword'
+    b. Ask user to Enter a password
+    c. If Entered Password match the pwd, print 'Hi' and exit from loop else print 'Try again'
+    d. User will be given 4 tries in total to enter the correct password.  
+    
+    
+# FOR Loop
+
+Repeat Problem 1 and 4 with For loop 
+    

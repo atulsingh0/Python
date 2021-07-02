@@ -1,0 +1,38 @@
+1. Design a test score program which output will be something like below - 
+----------------------------------------
+Welcome to Test Score Program - 
+Enter 'x' to exit. 
+
+Enter Test Score : 75
+Enter Test Score : 95
+Enter Test Score : 85
+Enter Test Score : 65
+Enter Test Score : x
+
+Total : 320
+No of Scores: 4
+Averahe Score: 80
+Low Score: 65
+High Score: 95
+Median Score: 80      
+------------------------------------------
+Hint - Median Score = Max + Min / 2
+
+
+2. Design a program with below outputs - 
+
+a. define a below variable.
+movies = ['IronMan', 'Avengers', 'Thor']
+
+b. Display a menu to user 
+Enter 1 to Add a movie
+Enter 2 to delete a movie
+Enter 3 to list all the movie
+Enter 4 to give me random movie
+
+c. Based on the user input perform Add, delete and list operation on list movies. 
+Hint - To get random movie from list - 
+import random # import will be very start in program
+random.shuffle(movies)
+random_movie = random.choice(movies)
+
