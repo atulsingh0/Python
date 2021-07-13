@@ -1,0 +1,7 @@
+1. convert_cel_to_far() which takes one float parameter representing
+degrees Celsius and returns a float representing the same temperature in degrees Fahrenheit using the following formula:
+F = C * 9/5 + 32
+
+2. convert_far_to_cel() which take one float parameter representing
+degrees Fahrenheit and returns a float representing the same temperature in degrees Celsius using the following formula:
+C = (F - 32) * 5/9
