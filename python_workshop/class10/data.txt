@@ -1,0 +1,9 @@
+this is a sample data     file,
+which we want to read by using python program.
+let's start to write a poem - 
+but before that.. which one do you like from below list - 
+- Baa Baa Black Sheep
+- Twinkle Twinkle Little Star
+- Baby Shark
+Let me know in the comments below. 
+Happy Learning !!!
